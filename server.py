@@ -1,49 +1,16 @@
 #!/usr/bin/env python3
-"""Content provenance registry. — MEOK AI Labs."""
-import json, os, hashlib, random
-from datetime import datetime, timezone, timedelta
-from collections import defaultdict
+import json, hashlib, time
 from mcp.server.fastmcp import FastMCP
-
-_usage = defaultdict(list)
-def _rl(c="anon"):
-    now = datetime.now(timezone.utc)
-    _usage[c] = [t for t in _usage[c] if (now-t).total_seconds() < 86400]
-    if len(_usage[c]) >= 15: return json.dumps({"error": "Limit 15/day"})
-    _usage[c].append(now); return None
-
-mcp = FastMCP("content-registry", instructions="MEOK AI Labs — Content provenance registry.")
-_store = []
-
-@mcp.tool()
-def register_content(content_hash: str, creator: str, ai_generated: bool = True) -> str:
-    """Content provenance registry."""
-    if err := _rl(): return err
-    ts = datetime.now(timezone.utc).isoformat()
-    entry = {"id": hashlib.sha256(f"{ts}{str(locals())}".encode()).hexdigest()[:12], "timestamp": ts}
-    for k, v in locals().items():
-        if k not in ("err", "ts", "entry"): entry[k] = v
-    _store.append(entry)
-    return json.dumps(entry, indent=2)
-
-@mcp.tool()
-def verify_provenance(content_hash: str) -> str:
-    """Process and verify."""
-    if err := _rl(): return err
-    result = {"timestamp": datetime.now(timezone.utc).isoformat(), "status": "processed"}
-    for k, v in locals().items():
-        if k not in ("err", "result"): result[k] = v
-    return json.dumps(result, indent=2)
-
-@mcp.tool()
-def get_registry() -> str:
-    """Get stored entries."""
-    return json.dumps({"entries": _store[-20:], "total": len(_store)}, indent=2)
-
-@mcp.tool()
-def get_stats() -> str:
-    """Usage stats."""
-    return json.dumps({"total": len(_store), "timestamp": datetime.now(timezone.utc).isoformat()}, indent=2)
-
+mcp = FastMCP("content-registry-mcp")
+_REGISTRY: dict = {}
+@mcp.tool(name="register_content")
+async def register_content(title: str, content: str, author: str) -> str:
+    cid = hashlib.sha256(content.encode()).hexdigest()[:16]
+    _REGISTRY[cid] = {"title": title, "author": author, "hash": cid, "registered_at": time.time()}
+    return json.dumps({"content_id": cid, "status": "registered"})
+@mcp.tool(name="verify_ownership")
+async def verify_ownership(content_id: str, author: str) -> str:
+    entry = _REGISTRY.get(content_id)
+    return json.dumps({"verified": entry is not None and entry["author"] == author, "registered_at": entry["registered_at"] if entry else None})
 if __name__ == "__main__":
     mcp.run()
