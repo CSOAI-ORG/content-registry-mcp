@@ -1,3 +1,25 @@
 name: content-registry-mcp
-description: MEOK AI Labs - Ucontent registry
+description: MEOK AI Labs - AI Governance & Compliance
 version: 1.0.0
+tools:
+- name: register_content
+  description: ''
+  parameters:
+  - name: title
+    type: string
+    required: true
+  - name: content
+    type: string
+    required: true
+  - name: author
+    type: string
+    required: true
+- name: verify_ownership
+  description: ''
+  parameters:
+  - name: content_id
+    type: string
+    required: true
+  - name: author
+    type: string
+    required: true
