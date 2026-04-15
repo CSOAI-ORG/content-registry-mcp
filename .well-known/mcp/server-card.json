@@ -1,0 +1,58 @@
+{
+  "name": "content-registry",
+  "description": "Register content with cryptographic hashes and timestamps, verify integrity, search the registry, and track full provenance chains. Uses SHA-256 hashing.",
+  "version": "1.0.0",
+  "protocol_version": "2025-11-25",
+  "publisher": {
+    "name": "MEOK AI Labs",
+    "url": "https://meok.ai",
+    "email": "nicholas@meok.ai"
+  },
+  "repository": "https://github.com/CSOAI-ORG/content-registry-mcp",
+  "license": "MIT",
+  "transport": [
+    "stdio",
+    "streamable-http"
+  ],
+  "authentication": {
+    "type": "api-key",
+    "free_tier": true,
+    "free_limit": "15 calls/day"
+  },
+  "tools": [
+    {
+      "name": "register_content",
+      "description": "Register content with a cryptographic hash and timestamp. Returns a registration ID for future verification."
+    },
+    {
+      "name": "verify_content",
+      "description": "Verify registered content integrity by comparing hashes. Provide content + registration_id or expected_hash."
+    },
+    {
+      "name": "search_registry",
+      "description": "Search the registry by title/tag query, hash, author, content type, or status."
+    },
+    {
+      "name": "get_provenance_chain",
+      "description": "Get the full provenance trail for a registered content item - all events from registration through any modifications or verifications."
+    },
+    {
+      "name": "revoke_registration",
+      "description": "Revoke a content registration. Content record is preserved but marked as revoked."
+    }
+  ],
+  "categories": [
+    "AI & Machine Learning",
+    "Blockchain & Web3",
+    "Content & Media"
+  ],
+  "pricing": {
+    "free": {
+      "calls_per_day": 15
+    },
+    "pro": {
+      "price": "$29/month",
+      "url": "https://meok.ai/pricing"
+    }
+  }
+}
