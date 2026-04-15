@@ -9,5 +9,6 @@
   },
   "dependencies": {
     "mcp": "^1.0.0"
-  }
+  },
+  "description": "Content Registry MCP server. Tools: register content, verify content, search registry. Built by MEOK AI Labs."
 }

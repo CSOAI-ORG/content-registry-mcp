@@ -1,6 +1,6 @@
 name: content-registry-mcp
-description: Register content with cryptographic hashes and timestamps, verify integrity,
-  search the registry, an
+description: 'Content Registry MCP server. Tools: register content, verify content,
+  search registry. Built by MEOK AI Labs.'
 version: 1.0.0
 tools:
 - name: register_content
