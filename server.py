@@ -4,10 +4,13 @@
 import sys, os
 sys.path.insert(0, os.path.expanduser('~/clawd/meok-labs-engine/shared'))
 from auth_middleware import check_access
+from persistence import ServerStore
 
 import json, hashlib, time, uuid
 from collections import defaultdict
 from mcp.server.fastmcp import FastMCP
+
+_store = ServerStore("content-registry")
 
 # Rate limiting
 _rate_limits: dict = defaultdict(list)
@@ -21,11 +24,6 @@ def _check_rate(key: str) -> bool:
         return False
     _rate_limits[key].append(now)
     return True
-
-# In-memory registry (persists for server lifetime)
-_REGISTRY: dict = {}
-_PROVENANCE_LOG: list = []  # Append-only event log
-_HASH_INDEX: dict = {}  # content_hash -> registration_id
 
 mcp = FastMCP("content-registry", instructions="Register content with cryptographic hashes and timestamps, verify integrity, search the registry, and track full provenance chains. Uses SHA-256 hashing.")
 
@@ -45,7 +43,7 @@ def _log_event(registration_id: str, event_type: str, details: dict) -> dict:
         "timestamp_iso": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
         "details": details,
     }
-    _PROVENANCE_LOG.append(event)
+    _store.append("provenance_log", event)
     return event
 
 
@@ -68,9 +66,9 @@ def register_content(title: str, content: str, author: str, content_type: str = 
     content_hash = _compute_content_hash(content)
 
     # Check for duplicate registration
-    if content_hash in _HASH_INDEX:
-        existing_id = _HASH_INDEX[content_hash]
-        existing = _REGISTRY.get(existing_id)
+    existing_id = _store.hget("hash_index", content_hash)
+    if existing_id:
+        existing = _store.hget("registry", existing_id)
         if existing and existing.get("status") == "active":
             return json.dumps({
                 "error": "duplicate_content",
@@ -101,8 +99,8 @@ def register_content(title: str, content: str, author: str, content_type: str = 
         "previous_versions": [],
     }
 
-    _REGISTRY[registration_id] = entry
-    _HASH_INDEX[content_hash] = registration_id
+    _store.hset("registry", registration_id, entry)
+    _store.hset("hash_index", content_hash, registration_id)
 
     _log_event(registration_id, "registration", {
         "title": title,
@@ -138,7 +136,7 @@ def verify_content(content: str, registration_id: str = "", expected_hash: str =
 
     # Verify against registration
     if registration_id:
-        entry = _REGISTRY.get(registration_id)
+        entry = _store.hget("registry", registration_id)
         if not entry:
             return json.dumps({
                 "verified": False,
@@ -186,9 +184,9 @@ def verify_content(content: str, registration_id: str = "", expected_hash: str =
         })
 
     # Check if content exists in registry by hash
-    existing_id = _HASH_INDEX.get(current_hash)
+    existing_id = _store.hget("hash_index", current_hash)
     if existing_id:
-        entry = _REGISTRY[existing_id]
+        entry = _store.hget("registry", existing_id)
         return json.dumps({
             "found_in_registry": True,
             "registration_id": existing_id,
@@ -220,8 +218,9 @@ def search_registry(query: str = "", content_hash: str = "", author: str = "", c
 
     results = []
     query_lower = query.lower()
+    all_registry = _store.hgetall("registry")
 
-    for reg_id, entry in _REGISTRY.items():
+    for reg_id, entry in all_registry.items():
         if status and entry["status"] != status.lower():
             continue
 
@@ -259,7 +258,7 @@ def search_registry(query: str = "", content_hash: str = "", author: str = "", c
         "query": {"text": query, "hash": content_hash, "author": author, "type": content_type, "status": status},
         "total_results": len(results),
         "results": results,
-        "registry_size": len(_REGISTRY),
+        "registry_size": len(all_registry),
         "searched_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
     })
 
@@ -273,12 +272,12 @@ def get_provenance_chain(registration_id: str, api_key: str = "") -> str:
     if not _check_rate(api_key or "anon"):
         return json.dumps({"error": "Rate limit exceeded. Try again in 60 seconds."})
 
-    entry = _REGISTRY.get(registration_id)
+    entry = _store.hget("registry", registration_id)
     if not entry:
         return json.dumps({"error": f"Registration '{registration_id}' not found"})
 
     # Collect all events for this registration
-    events = [e for e in _PROVENANCE_LOG if e["registration_id"] == registration_id]
+    events = [e for e in _store.list("provenance_log") if e["registration_id"] == registration_id]
     events.sort(key=lambda x: x["timestamp"])
 
     # Build chain summary
@@ -325,7 +324,7 @@ def revoke_registration(registration_id: str, reason: str, revoked_by: str, api_
     if not revoked_by.strip():
         return json.dumps({"error": "Revoking party identity is required"})
 
-    entry = _REGISTRY.get(registration_id)
+    entry = _store.hget("registry", registration_id)
     if not entry:
         return json.dumps({"error": f"Registration '{registration_id}' not found"})
 
@@ -344,10 +343,10 @@ def revoke_registration(registration_id: str, reason: str, revoked_by: str, api_
     entry["revoked_at"] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
     entry["revoked_by"] = revoked_by
     entry["revocation_reason"] = reason
+    _store.hset("registry", registration_id, entry)
 
     # Remove from hash index so same content can be re-registered
-    if entry["content_hash"] in _HASH_INDEX:
-        del _HASH_INDEX[entry["content_hash"]]
+    _store.hdel("hash_index", entry["content_hash"])
 
     _log_event(registration_id, "revocation", {
         "reason": reason,
