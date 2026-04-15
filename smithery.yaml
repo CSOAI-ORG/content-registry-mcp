@@ -1,9 +1,11 @@
 name: content-registry-mcp
-description: MEOK AI Labs - AI Governance & Compliance
+description: Register content with cryptographic hashes and timestamps, verify integrity,
+  search the registry, an
 version: 1.0.0
 tools:
 - name: register_content
-  description: ''
+  description: Register content with a cryptographic hash and timestamp. Returns a
+    registration ID for future verification.
   parameters:
   - name: title
     type: string
@@ -14,12 +16,64 @@ tools:
   - name: author
     type: string
     required: true
-- name: verify_ownership
-  description: ''
+  - name: content_type
+    type: string
+    required: false
+  - name: tags
+    type: string
+    required: false
+- name: verify_content
+  description: Verify registered content integrity by comparing hashes. Provide content
+    + registration_id or expected_hash.
   parameters:
-  - name: content_id
+  - name: content
     type: string
     required: true
+  - name: registration_id
+    type: string
+    required: false
+  - name: expected_hash
+    type: string
+    required: false
+- name: search_registry
+  description: Search the registry by title/tag query, hash, author, content type,
+    or status.
+  parameters:
+  - name: query
+    type: string
+    required: false
+  - name: content_hash
+    type: string
+    required: false
   - name: author
+    type: string
+    required: false
+  - name: content_type
+    type: string
+    required: false
+  - name: status
+    type: string
+    required: false
+  - name: limit
+    type: integer
+    required: false
+- name: get_provenance_chain
+  description: Get the full provenance trail for a registered content item - all events
+    from registration through any modifications or verifications.
+  parameters:
+  - name: registration_id
+    type: string
+    required: true
+- name: revoke_registration
+  description: Revoke a content registration. Content record is preserved but marked
+    as revoked.
+  parameters:
+  - name: registration_id
+    type: string
+    required: true
+  - name: reason
+    type: string
+    required: true
+  - name: revoked_by
     type: string
     required: true

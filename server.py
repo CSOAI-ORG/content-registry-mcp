@@ -27,7 +27,7 @@ _REGISTRY: dict = {}
 _PROVENANCE_LOG: list = []  # Append-only event log
 _HASH_INDEX: dict = {}  # content_hash -> registration_id
 
-mcp = FastMCP("content-registry-mcp", instructions="Register content with cryptographic hashes and timestamps, verify integrity, search the registry, and track full provenance chains. Uses SHA-256 hashing.")
+mcp = FastMCP("content-registry", instructions="Register content with cryptographic hashes and timestamps, verify integrity, search the registry, and track full provenance chains. Uses SHA-256 hashing.")
 
 
 def _compute_content_hash(content: str) -> str:
@@ -50,7 +50,7 @@ def _log_event(registration_id: str, event_type: str, details: dict) -> dict:
 
 
 @mcp.tool()
-async def register_content(title: str, content: str, author: str, content_type: str = "text", tags: str = "", api_key: str = "") -> str:
+def register_content(title: str, content: str, author: str, content_type: str = "text", tags: str = "", api_key: str = "") -> str:
     """Register content with a cryptographic hash and timestamp. Returns a registration ID for future verification."""
     allowed, msg, tier = check_access(api_key)
     if not allowed:
@@ -123,7 +123,7 @@ async def register_content(title: str, content: str, author: str, content_type: 
 
 
 @mcp.tool()
-async def verify_content(content: str, registration_id: str = "", expected_hash: str = "", api_key: str = "") -> str:
+def verify_content(content: str, registration_id: str = "", expected_hash: str = "", api_key: str = "") -> str:
     """Verify registered content integrity by comparing hashes. Provide content + registration_id or expected_hash."""
     allowed, msg, tier = check_access(api_key)
     if not allowed:
@@ -207,7 +207,7 @@ async def verify_content(content: str, registration_id: str = "", expected_hash:
 
 
 @mcp.tool()
-async def search_registry(query: str = "", content_hash: str = "", author: str = "", content_type: str = "", status: str = "active", limit: int = 20, api_key: str = "") -> str:
+def search_registry(query: str = "", content_hash: str = "", author: str = "", content_type: str = "", status: str = "active", limit: int = 20, api_key: str = "") -> str:
     """Search the registry by title/tag query, hash, author, content type, or status."""
     allowed, msg, tier = check_access(api_key)
     if not allowed:
@@ -265,7 +265,7 @@ async def search_registry(query: str = "", content_hash: str = "", author: str =
 
 
 @mcp.tool()
-async def get_provenance_chain(registration_id: str, api_key: str = "") -> str:
+def get_provenance_chain(registration_id: str, api_key: str = "") -> str:
     """Get the full provenance trail for a registered content item - all events from registration through any modifications or verifications."""
     allowed, msg, tier = check_access(api_key)
     if not allowed:
@@ -312,7 +312,7 @@ async def get_provenance_chain(registration_id: str, api_key: str = "") -> str:
 
 
 @mcp.tool()
-async def revoke_registration(registration_id: str, reason: str, revoked_by: str, api_key: str = "") -> str:
+def revoke_registration(registration_id: str, reason: str, revoked_by: str, api_key: str = "") -> str:
     """Revoke a content registration. Content record is preserved but marked as revoked."""
     allowed, msg, tier = check_access(api_key)
     if not allowed:

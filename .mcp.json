@@ -1,11 +1,11 @@
 {
   "name": "content-registry-mcp",
-  "description": "MEOK AI Labs - AI Governance & Compliance",
+  "description": "> **By [MEOK AI Labs](https://meok.ai)** \u2014 Register content with cryptographic hashes and timestamps, verify integrity, search the registry, an",
   "version": "1.0.0",
   "tools": [
     {
       "name": "register_content",
-      "description": "",
+      "description": "Register content with a cryptographic hash and timestamp. Returns a registration ID for future verification.",
       "parameters": {
         "type": "object",
         "properties": {
@@ -17,6 +17,12 @@
           },
           "author": {
             "type": "string"
+          },
+          "content_type": {
+            "type": "string"
+          },
+          "tags": {
+            "type": "string"
           }
         },
         "required": [
@@ -27,21 +33,89 @@
       }
     },
     {
-      "name": "verify_ownership",
-      "description": "",
+      "name": "verify_content",
+      "description": "Verify registered content integrity by comparing hashes. Provide content + registration_id or expected_hash.",
       "parameters": {
         "type": "object",
         "properties": {
-          "content_id": {
+          "content": {
             "type": "string"
           },
-          "author": {
+          "registration_id": {
+            "type": "string"
+          },
+          "expected_hash": {
             "type": "string"
           }
         },
         "required": [
-          "content_id",
-          "author"
+          "content"
+        ]
+      }
+    },
+    {
+      "name": "search_registry",
+      "description": "Search the registry by title/tag query, hash, author, content type, or status.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string"
+          },
+          "content_hash": {
+            "type": "string"
+          },
+          "author": {
+            "type": "string"
+          },
+          "content_type": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "limit": {
+            "type": "integer"
+          }
+        },
+        "required": []
+      }
+    },
+    {
+      "name": "get_provenance_chain",
+      "description": "Get the full provenance trail for a registered content item - all events from registration through any modifications or verifications.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "registration_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "registration_id"
+        ]
+      }
+    },
+    {
+      "name": "revoke_registration",
+      "description": "Revoke a content registration. Content record is preserved but marked as revoked.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "registration_id": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "revoked_by": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "registration_id",
+          "reason",
+          "revoked_by"
         ]
       }
     }
