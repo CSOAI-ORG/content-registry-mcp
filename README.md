@@ -1,68 +1,38 @@
-# Content Registry MCP Server
+<div align="center">
 
-> By [MEOK AI Labs](https://meok.ai) — Register, verify, and track content provenance with SHA-256 cryptographic hashing
+[![GitHub stars](https://img.shields.io/github/stars/CSOAI-ORG/content-registry-mcp)](https://github.com/CSOAI-ORG/content-registry-mcp/stargazers)
+
+# ucontentU registryU mcp
+
+****
+
+[![npm version](https://img.shields.io/npm/v/@meok-ai/content-registry-mcp)](https://www.npmjs.com/package/@meok-ai/content-registry-mcp)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![MEOK AI Labs](https://img.shields.io/badge/MEOK_AI_Labs-255+_servers-purple)](https://meok.ai)
+
+[Installation](#installation) · [Docs](https://csoai.org) · [Report Bug](https://github.com/CSOAI-ORG/content-registry-mcp/issues)
+
+</div>
+
+---
 
 ## Installation
 
 ```bash
 pip install content-registry-mcp
+# or
+npm install -g @meok-ai/content-registry-mcp
 ```
 
-## Usage
+## Quick Start
 
-```bash
-python server.py
-```
+See the project repository for full documentation and examples.
 
-## Tools
+## Enterprise Support
 
-### `register_content`
-Register content with a cryptographic hash and timestamp. Returns a registration ID for verification.
-
-**Parameters:**
-- `title` (str): Content title
-- `content` (str): Content body
-- `author` (str): Author name
-- `content_type` (str): Content type (default 'text')
-- `tags` (str): Comma-separated tags
-
-### `verify_content`
-Verify registered content integrity by comparing SHA-256 hashes.
-
-**Parameters:**
-- `content` (str): Content to verify
-- `registration_id` (str): Registration ID to verify against
-- `expected_hash` (str): Expected hash to compare
-
-### `search_registry`
-Search the registry by title/tag query, hash, author, content type, or status.
-
-**Parameters:**
-- `query` (str): Search query
-- `content_hash` (str): Hash filter
-- `author` (str): Author filter
-- `content_type` (str): Type filter
-- `status` (str): Status filter (default 'active')
-- `limit` (int): Max results (default 20)
-
-### `get_provenance_chain`
-Get the full provenance trail for a registered content item — all events from registration through modifications and verifications.
-
-**Parameters:**
-- `registration_id` (str): Registration identifier
-
-### `revoke_registration`
-Revoke a content registration. Record is preserved but marked as revoked.
-
-**Parameters:**
-- `registration_id` (str): Registration identifier
-- `reason` (str): Reason for revocation
-- `revoked_by` (str): Revoking party identity
-
-## Authentication
-
-Free tier: 15 calls/day. Upgrade at [meok.ai/pricing](https://meok.ai/pricing) for unlimited access.
+- 📧 nicholas@csoai.org
+- 🌐 [CSOAI.org](https://csoai.org)
 
 ## License
 
-MIT — MEOK AI Labs
+MIT © [CSOAI](https://csoai.org)
