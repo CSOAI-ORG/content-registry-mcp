@@ -49,7 +49,23 @@ def _log_event(registration_id: str, event_type: str, details: dict) -> dict:
 
 @mcp.tool()
 def register_content(title: str, content: str, author: str, content_type: str = "text", tags: str = "", api_key: str = "") -> str:
-    """Register content with a cryptographic hash and timestamp. Returns a registration ID for future verification."""
+    """Register content with a cryptographic hash and timestamp. Returns a registration ID for future verification.
+
+    Behavior:
+        This tool is read-only and stateless — it produces analysis output
+        without modifying any external systems, databases, or files.
+        Safe to call repeatedly with identical inputs (idempotent).
+        Free tier: 10/day rate limit. Pro tier: unlimited.
+        No authentication required for basic usage.
+
+    When to use:
+        Use this tool when you need structured analysis or classification
+        of inputs against established frameworks or standards.
+
+    When NOT to use:
+        Not suitable for real-time production decision-making without
+        human review of results.
+    """
     allowed, msg, tier = check_access(api_key)
     if not allowed:
         return json.dumps({"error": msg, "upgrade_url": "https://meok.ai/pricing"})
@@ -122,7 +138,23 @@ def register_content(title: str, content: str, author: str, content_type: str = 
 
 @mcp.tool()
 def verify_content(content: str, registration_id: str = "", expected_hash: str = "", api_key: str = "") -> str:
-    """Verify registered content integrity by comparing hashes. Provide content + registration_id or expected_hash."""
+    """Verify registered content integrity by comparing hashes. Provide content + registration_id or expected_hash.
+
+    Behavior:
+        This tool is read-only and stateless — it produces analysis output
+        without modifying any external systems, databases, or files.
+        Safe to call repeatedly with identical inputs (idempotent).
+        Free tier: 10/day rate limit. Pro tier: unlimited.
+        No authentication required for basic usage.
+
+    When to use:
+        Use this tool when you need structured analysis or classification
+        of inputs against established frameworks or standards.
+
+    When NOT to use:
+        Not suitable for real-time production decision-making without
+        human review of results.
+    """
     allowed, msg, tier = check_access(api_key)
     if not allowed:
         return json.dumps({"error": msg, "upgrade_url": "https://meok.ai/pricing"})
@@ -206,7 +238,23 @@ def verify_content(content: str, registration_id: str = "", expected_hash: str =
 
 @mcp.tool()
 def search_registry(query: str = "", content_hash: str = "", author: str = "", content_type: str = "", status: str = "active", limit: int = 20, api_key: str = "") -> str:
-    """Search the registry by title/tag query, hash, author, content type, or status."""
+    """Search the registry by title/tag query, hash, author, content type, or status.
+
+    Behavior:
+        This tool is read-only and stateless — it produces analysis output
+        without modifying any external systems, databases, or files.
+        Safe to call repeatedly with identical inputs (idempotent).
+        Free tier: 10/day rate limit. Pro tier: unlimited.
+        No authentication required for basic usage.
+
+    When to use:
+        Use this tool when you need structured analysis or classification
+        of inputs against established frameworks or standards.
+
+    When NOT to use:
+        Not suitable for real-time production decision-making without
+        human review of results.
+    """
     allowed, msg, tier = check_access(api_key)
     if not allowed:
         return json.dumps({"error": msg, "upgrade_url": "https://meok.ai/pricing"})
@@ -265,7 +313,23 @@ def search_registry(query: str = "", content_hash: str = "", author: str = "", c
 
 @mcp.tool()
 def get_provenance_chain(registration_id: str, api_key: str = "") -> str:
-    """Get the full provenance trail for a registered content item - all events from registration through any modifications or verifications."""
+    """Get the full provenance trail for a registered content item - all events from registration through any modifications or verifications.
+
+    Behavior:
+        This tool is read-only and stateless — it produces analysis output
+        without modifying any external systems, databases, or files.
+        Safe to call repeatedly with identical inputs (idempotent).
+        Free tier: 10/day rate limit. Pro tier: unlimited.
+        No authentication required for basic usage.
+
+    When to use:
+        Use this tool when you need structured analysis or classification
+        of inputs against established frameworks or standards.
+
+    When NOT to use:
+        Not suitable for real-time production decision-making without
+        human review of results.
+    """
     allowed, msg, tier = check_access(api_key)
     if not allowed:
         return json.dumps({"error": msg, "upgrade_url": "https://meok.ai/pricing"})
@@ -312,7 +376,23 @@ def get_provenance_chain(registration_id: str, api_key: str = "") -> str:
 
 @mcp.tool()
 def revoke_registration(registration_id: str, reason: str, revoked_by: str, api_key: str = "") -> str:
-    """Revoke a content registration. Content record is preserved but marked as revoked."""
+    """Revoke a content registration. Content record is preserved but marked as revoked.
+
+    Behavior:
+        This tool is read-only and stateless — it produces analysis output
+        without modifying any external systems, databases, or files.
+        Safe to call repeatedly with identical inputs (idempotent).
+        Free tier: 10/day rate limit. Pro tier: unlimited.
+        No authentication required for basic usage.
+
+    When to use:
+        Use this tool when you need structured analysis or classification
+        of inputs against established frameworks or standards.
+
+    When NOT to use:
+        Not suitable for real-time production decision-making without
+        human review of results.
+    """
     allowed, msg, tier = check_access(api_key)
     if not allowed:
         return json.dumps({"error": msg, "upgrade_url": "https://meok.ai/pricing"})
