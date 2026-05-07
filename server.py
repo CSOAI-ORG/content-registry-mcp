@@ -65,6 +65,15 @@ def register_content(title: str, content: str, author: str, content_type: str = 
     When NOT to use:
         Not suitable for real-time production decision-making without
         human review of results.
+
+    Args:
+        title (str): The title to analyze or process.
+        content (str): The content to analyze or process.
+        author (str): The author to analyze or process.
+        content_type (str): The content type to analyze or process.
+        tags (str): The tags to analyze or process.
+        api_key (str): The api key to analyze or process.
+
     Behavioral Transparency:
         - Side Effects: This tool is read-only and produces no side effects. It does not modify
           any external state, databases, or files. All output is computed in-memory and returned
@@ -168,6 +177,13 @@ def verify_content(content: str, registration_id: str = "", expected_hash: str =
     When NOT to use:
         Not suitable for real-time production decision-making without
         human review of results.
+
+    Args:
+        content (str): The content to analyze or process.
+        registration_id (str): The registration id to analyze or process.
+        expected_hash (str): The expected hash to analyze or process.
+        api_key (str): The api key to analyze or process.
+
     Behavioral Transparency:
         - Side Effects: This tool is read-only and produces no side effects. It does not modify
           any external state, databases, or files. All output is computed in-memory and returned
@@ -282,6 +298,16 @@ def search_registry(query: str = "", content_hash: str = "", author: str = "", c
     When NOT to use:
         Not suitable for real-time production decision-making without
         human review of results.
+
+    Args:
+        query (str): The query to analyze or process.
+        content_hash (str): The content hash to analyze or process.
+        author (str): The author to analyze or process.
+        content_type (str): The content type to analyze or process.
+        status (str): The status to analyze or process.
+        limit (int): The limit to analyze or process.
+        api_key (str): The api key to analyze or process.
+
     Behavioral Transparency:
         - Side Effects: This tool is read-only and produces no side effects. It does not modify
           any external state, databases, or files. All output is computed in-memory and returned
@@ -371,6 +397,11 @@ def get_provenance_chain(registration_id: str, api_key: str = "") -> str:
     When NOT to use:
         Not suitable for real-time production decision-making without
         human review of results.
+
+    Args:
+        registration_id (str): The registration id to analyze or process.
+        api_key (str): The api key to analyze or process.
+
     Behavioral Transparency:
         - Side Effects: This tool is read-only and produces no side effects. It does not modify
           any external state, databases, or files. All output is computed in-memory and returned
@@ -448,6 +479,13 @@ def revoke_registration(registration_id: str, reason: str, revoked_by: str, api_
     When NOT to use:
         Not suitable for real-time production decision-making without
         human review of results.
+
+    Args:
+        registration_id (str): The registration id to analyze or process.
+        reason (str): The reason to analyze or process.
+        revoked_by (str): The revoked by to analyze or process.
+        api_key (str): The api key to analyze or process.
+
     Behavioral Transparency:
         - Side Effects: This tool is read-only and produces no side effects. It does not modify
           any external state, databases, or files. All output is computed in-memory and returned
