@@ -1,45 +1,59 @@
-[![content-registry-mcp MCP server](https://glama.ai/mcp/servers/CSOAI-ORG/content-registry-mcp/badges/score.svg)](https://glama.ai/mcp/servers/CSOAI-ORG/content-registry-mcp)
-[![MCP Registry](https://img.shields.io/badge/MCP_Registry-Published-green)](https://registry.modelcontextprotocol.io)
-[![PyPI](https://img.shields.io/pypi/v/content-registry-mcp)](https://pypi.org/project/content-registry-mcp/)
-
-[![content-registry-mcp MCP server](https://glama.ai/mcp/servers/CSOAI-ORG/content-registry-mcp/badges/card.svg)](https://glama.ai/mcp/servers/CSOAI-ORG/content-registry-mcp)
-
 <div align="center">
 
-[![GitHub stars](https://img.shields.io/github/stars/CSOAI-ORG/content-registry-mcp)](https://github.com/CSOAI-ORG/content-registry-mcp/stargazers)
+# Content Registry MCP
 
-# ucontentU registryU mcp
+**MCP server for content registry mcp operations**
 
-****
-
-[![npm version](https://img.shields.io/npm/v/@meok-ai/content-registry-mcp)](https://www.npmjs.com/package/@meok-ai/content-registry-mcp)
+[![PyPI](https://img.shields.io/pypi/v/meok-content-registry-mcp)](https://pypi.org/project/meok-content-registry-mcp/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![MEOK AI Labs](https://img.shields.io/badge/MEOK_AI_Labs-255+_servers-purple)](https://meok.ai)
-
-[Installation](#installation) · [Docs](https://csoai.org) · [Report Bug](https://github.com/CSOAI-ORG/content-registry-mcp/issues)
+[![MEOK AI Labs](https://img.shields.io/badge/MEOK_AI_Labs-MCP_Server-purple)](https://meok.ai)
 
 </div>
 
----
+## Overview
+
+Content Registry MCP provides AI-powered tools via the Model Context Protocol (MCP).
+
+## Tools
+
+| Tool | Description |
+|------|-------------|
+| `register_content` | Register content with a cryptographic hash and timestamp. Returns a registration |
+| `verify_content` | Verify registered content integrity by comparing hashes. Provide content + regis |
+| `search_registry` | Search the registry by title/tag query, hash, author, content type, or status. |
+| `get_provenance_chain` | Get the full provenance trail for a registered content item - all events from re |
+| `revoke_registration` | Revoke a content registration. Content record is preserved but marked as revoked |
 
 ## Installation
 
 ```bash
-pip install content-registry-mcp
-# or
-npm install -g @meok-ai/content-registry-mcp
+pip install meok-content-registry-mcp
 ```
 
-## Quick Start
+## Usage with Claude Desktop
 
-See the project repository for full documentation and examples.
+Add to your Claude Desktop MCP config (`claude_desktop_config.json`):
 
-## Enterprise Support
+```json
+{
+  "mcpServers": {
+    "content-registry": {
+      "command": "python",
+      "args": ["-m", "meok_content_registry_mcp.server"]
+    }
+  }
+}
+```
 
-- 📧 nicholas@csoai.org
-- 🌐 [CSOAI.org](https://csoai.org)
+## Usage with FastMCP
+
+```python
+from mcp.server.fastmcp import FastMCP
+
+# This server exposes 5 tool(s) via MCP
+# See server.py for full implementation
+```
 
 ## License
 
-MIT © [CSOAI](https://csoai.org)
-<!-- mcp-name: io.github.CSOAI-ORG/content-registry-mcp -->
+MIT © [MEOK AI Labs](https://meok.ai)
