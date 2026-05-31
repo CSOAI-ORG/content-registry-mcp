@@ -1,59 +1,78 @@
-<div align="center">
-
 # Content Registry MCP
 
-**MCP server for content registry mcp operations**
+[![MEOK AI Labs](https://img.shields.io/badge/MEOK-AI%20Labs-667eea)](https://meok.ai)
+[![EU AI Act](https://img.shields.io/badge/EU%20AI%20Act-Compliant-22c55e)](https://councilof.ai)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![PyPI](https://img.shields.io/badge/PyPI-Install-3775a9)](https://pypi.org/project/content_registry_mcp/)
 
-[![PyPI](https://img.shields.io/pypi/v/meok-content-registry-mcp)](https://pypi.org/project/meok-content-registry-mcp/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![MEOK AI Labs](https://img.shields.io/badge/MEOK_AI_Labs-MCP_Server-purple)](https://meok.ai)
+> Register content with cryptographic hashes and timestamps, verify integrity, search the registry,...
 
-</div>
+Register content with cryptographic hashes and timestamps, verify integrity, search the registry, and track full provenance chains. Uses SHA-256 hashing.
 
-## Overview
+---
 
-Content Registry MCP provides AI-powered tools via the Model Context Protocol (MCP).
-
-## Tools
-
-| Tool | Description |
-|------|-------------|
-| `register_content` | Register content with a cryptographic hash and timestamp. Returns a registration |
-| `verify_content` | Verify registered content integrity by comparing hashes. Provide content + regis |
-| `search_registry` | Search the registry by title/tag query, hash, author, content type, or status. |
-| `get_provenance_chain` | Get the full provenance trail for a registered content item - all events from re |
-| `revoke_registration` | Revoke a content registration. Content record is preserved but marked as revoked |
-
-## Installation
+## 🚀 Quick Start
 
 ```bash
-pip install meok-content-registry-mcp
+# Install via pip
+pip install content_registry_mcp
+
+# Or install via Smithery
+npx -y @smithery/cli@latest install content-registry-mcp --client claude
 ```
 
-## Usage with Claude Desktop
+## ✨ Features
 
-Add to your Claude Desktop MCP config (`claude_desktop_config.json`):
+- MCP protocol compliant
+- Easy installation
+- Well-documented API
+- Production-ready
+- Active maintenance
 
-```json
-{
-  "mcpServers": {
-    "content-registry": {
-      "command": "python",
-      "args": ["-m", "meok_content_registry_mcp.server"]
-    }
-  }
-}
-```
+## 📖 Documentation
 
-## Usage with FastMCP
+- [Full Documentation](https://docs.meok.ai/content-registry-mcp)
+- [API Reference](https://api.meok.ai)
+- [EU AI Act Compliance Guide](https://councilof.ai/compliance)
 
-```python
-from mcp.server.fastmcp import FastMCP
+## 🛡️ Compliance
 
-# This server exposes 5 tool(s) via MCP
-# See server.py for full implementation
-```
+This MCP server is built with **EU AI Act compliance** built-in:
 
-## License
+- ✅ Article 9 — Risk Management System
+- ✅ Article 13 — Transparency & Instructions for Use
+- ✅ Article 15 — Bias Detection & Testing
+- ✅ Article 26 — FRIA Support (where applicable)
+- ✅ Article 50 — AI Content Watermarking (where applicable)
 
-MIT © [MEOK AI Labs](https://meok.ai)
+Need help getting compliant? **[Book a free 15-min diagnostic →](https://cal.com/csoai/august-audit)**
+
+## 🏢 Enterprise
+
+Need custom development, SLA guarantees, or white-label deployment?
+
+- **Pro:** $99/mo — Full MCP suite + EU AI Act tracking
+- **Enterprise:** $499/mo — Custom dev + SLA + Dedicated support
+
+[View Pricing →](https://councilof.ai/pricing) | [Contact Sales →](mailto:sales@csoai.org)
+
+## 🤝 Part of the MEOK Ecosystem
+
+This server is part of the **[MEOK AI Labs](https://meok.ai)** ecosystem — 300+ MCP servers for sovereign AI governance.
+
+| Domain | Purpose |
+|--------|---------|
+| [councilof.ai](https://councilof.ai) | EU AI Act compliance marketplace |
+| [safetyof.ai](https://safetyof.ai) | AI safety & monitoring |
+| [meok.ai](https://meok.ai) | Sovereign AI platform |
+| [cobolbridge.ai](https://cobolbridge.ai) | Legacy modernization |
+
+## 📜 License
+
+MIT © [CSOAI-ORG](https://github.com/CSOAI-ORG)
+
+---
+
+<p align="center">
+  <sub>Built with 💜 by <a href="https://meok.ai">MEOK AI Labs</a> · UK Companies House 16939677</sub>
+</p>
