@@ -1,0 +1,9 @@
+# content-registry-mcp - Auto-trigger Rules
+
+When the user asks about content registry, use content-registry-mcp tools: register_content, verify_content, search_registry, get_provenance_chain, revoke_registration
+
+**MCP server for content registry mcp operations**
+
+Install: `pip install content-registry-mcp`
+
+By MEOK AI Labs — MIT licensed.

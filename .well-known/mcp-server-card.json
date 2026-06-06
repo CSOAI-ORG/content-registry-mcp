@@ -1,0 +1,28 @@
+{
+  "name": "content-registry-mcp",
+  "title": "Content Registry Mcp",
+  "description": "Content Registry MCP server. Tools: register content, verify content, search registry. Built by MEOK AI Labs.",
+  "version": "1.0.6",
+  "homepage": "https://meok.ai",
+  "license": "MIT",
+  "transport": {
+    "type": "stdio"
+  },
+  "tools": [
+    {
+      "name": "register_content"
+    },
+    {
+      "name": "verify_content"
+    },
+    {
+      "name": "search_registry"
+    },
+    {
+      "name": "get_provenance_chain"
+    },
+    {
+      "name": "revoke_registration"
+    }
+  ]
+}

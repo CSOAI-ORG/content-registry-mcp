@@ -1,0 +1,36 @@
+# content-registry-mcp
+# **MCP server for content registry mcp operations**
+
+## Install
+```bash
+pip install content-registry-mcp
+```
+
+## Auth & Rate Limits
+- Free tier: 10 calls/day. No API key required.
+- Pro tier (£79/mo): unlimited + signed attestations.
+- Enterprise (£1,499/mo): white-label.
+
+## Tools
+
+### `register_content`
+Register content with a cryptographic hash and timestamp. Returns a registration ID for future verification.
+
+### `verify_content`
+Verify registered content integrity by comparing hashes. Provide content + registration_id or expected_hash.
+
+### `search_registry`
+Search the registry by title/tag query, hash, author, content type, or status.
+
+### `get_provenance_chain`
+Get the full provenance trail for a registered content item - all events from registration through any modifications or verifications.
+
+### `revoke_registration`
+Revoke a content registration. Content record is preserved but marked as revoked.
+
+
+## Maintainer
+MEOK AI Labs · hello@meok.ai · https://meok.ai · MIT licensed
+
+## Pairs with
+Governance moat: pair this tool with any of MEOK's 38 governance MCPs (EU AI Act, DORA, NIS2, CRA, GDPR, ISO 42001, etc.) for full compliance coverage.
