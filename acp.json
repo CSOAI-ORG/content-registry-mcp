@@ -1,0 +1,23 @@
+{
+  "acpVersion": "0.1",
+  "agent": {
+    "name": "content-registry-mcp",
+    "description": "Content Registry MCP Server by MEOK AI Labs",
+    "version": "1.0.6",
+    "provider": "MEOK AI Labs",
+    "interfaces": [
+      {
+        "type": "mcp",
+        "transport": "stdio",
+        "package": "content-registry-mcp"
+      }
+    ],
+    "capabilities": [
+      "register_content",
+      "verify_content",
+      "search_registry",
+      "get_provenance_chain",
+      "revoke_registration"
+    ]
+  }
+}
