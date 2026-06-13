@@ -4,9 +4,8 @@
   "version": "1.0.9",
   "description": "Content Registry MCP Server by MEOK AI Labs",
   "repository": {
-    "type": "git",
     "url": "https://github.com/CSOAI-ORG/content-registry-mcp",
-    "source": "https://github.com/CSOAI-ORG/content-registry-mcp"
+    "source": "github"
   },
   "packages": [
     {
