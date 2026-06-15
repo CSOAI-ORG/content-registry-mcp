@@ -1,4 +1,4 @@
-<!-- mcp-name: CSOAI-ORG/content-registry-mcp -->
+<!-- mcp-name: io.github.CSOAI-ORG/content-registry-mcp -->
 [![MCP Scorecard: 86/100](https://img.shields.io/badge/proofof.ai-86%2F100-5b21b6)](https://proofof.ai/scorecard/content-registry-mcp.html)
 
 # Content Registry MCP
@@ -138,3 +138,8 @@ Once configured, ask your assistant, for example:
 - "Use `register_content` to …"
 - "Use `verify_content` to …"
 - "Use `search_registry` to …"
+
+## See also
+
+MEOK compliance MCP fleet:
+[`content-calendar-ai-mcp`](https://github.com/CSOAI-ORG/content-calendar-ai-mcp)
